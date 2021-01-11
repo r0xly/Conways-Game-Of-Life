@@ -58,6 +58,8 @@ function drawGrid() {
 function start() {
     let restartButton = document.getElementById("restart");
     let clearButton = document.getElementById("clear");
+    let pauseButton = document.getElementById("pause")
+
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     grid = initGrid(width, height);
@@ -69,10 +71,15 @@ function start() {
     clearButton.onclick = function() {
         for (let x = 0; x < width; x++) {
             for (let y = 0; y < height; y++) {
-                let cellState = cell 
+                grid[x][y] = new Cell(new Vector(x, y), new Vector(25, 25), 0);
             }
         }
     }
+
+    pauseButton.onclick = function() {
+        paused = !paused;
+    }
+    
     requestAnimationFrame(update);
 }
 
