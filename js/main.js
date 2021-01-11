@@ -1,6 +1,7 @@
 const MIN_CELL_NEIGHBORS = 2;
 const MAX_CELL_NEIGHBORS = 3;
 const NEIGHBORS_FOR_REBIRTH = 3;
+const CELL_SIZE = 25;
 
 let canvas;
 let ctx;
@@ -39,7 +40,7 @@ function randomize(grid) {
     for (let x = 0; x < width; x++) {
         for (let y = 0; y < height; y++) {
             let cellState = Math.floor(Math.random() * Math.floor(2));
-            grid[x][y] = new Cell(new Vector(x, y), new Vector(25, 25), cellState);
+            grid[x][y] = new Cell(new Vector(x, y), new Vector(CELL_SIZE, CELL_SIZE), cellState);
         }
     }
 }
@@ -78,16 +79,16 @@ function start() {
 
     pauseButton.onclick = function() {
         paused = !paused;
+        pauseButton.text = paused ? "Unpause" : "Pause" 
     }
     
     requestAnimationFrame(update);
 }
 
 async function update() {
-    if (paused != true) {
-        drawGrid();
-        nextGen();
-    }
+    drawGrid();
+
+    if (paused != true) { nextGen(); }
 
     setTimeout(function() { 
         requestAnimationFrame(update); 
